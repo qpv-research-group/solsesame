@@ -1,4 +1,4 @@
-import sesame
+import solsesame
 import numpy as np
 import scipy.io
 
@@ -16,7 +16,7 @@ def runTest5():
     y = np.linspace(0,Ly,30)
 
     # Create a system
-    sys = sesame.Builder(x,y,periodic=False)
+    sys = solsesame.Builder(x, y, periodic=False)
 
     tau = 1e8
     vt = 0.025851991024560;
@@ -65,7 +65,7 @@ def runTest5():
 
     # Electrostatic potential dimensionless
 
-    solution = sesame.solve(sys, compute='Poisson', verbose=False)
+    solution = solsesame.solve(sys, compute='Poisson', verbose=False)
     veq = np.copy(solution['v'])
 
     solution.update({'x': sys.xpts, 'chi': sys.bl, 'eg': sys.Eg, 'Nc': sys.Nc, 'Nv': sys.Nv, 'epsilon': sys.epsilon})
@@ -77,7 +77,7 @@ def runTest5():
     f = lambda x, y: G
     sys.generation(f)
 
-    solution = sesame.solve(sys, guess=solution, verbose=False)
+    solution = solsesame.solve(sys, guess=solution, verbose=False)
     solution.update({'x': sys.xpts, 'chi': sys.bl, 'eg': sys.Eg, 'Nc': sys.Nc, 'Nv': sys.Nv})
 
     voltages = np.linspace(0, 0.9, 10)
@@ -101,9 +101,9 @@ def runTest5():
         # Apply the voltage on the right contact
         result['v'][s] = veq[s] + q*vapp
         # Call the Drift Diffusion Poisson solver
-        result = sesame.solve(sys, guess=result, maxiter=1000, verbose=False)
+        result = solsesame.solve(sys, guess=result, maxiter=1000, verbose=False)
         # Compute current
-        az = sesame.Analyzer(sys, result)
+        az = solsesame.Analyzer(sys, result)
         tj = az.full_current()* sys.scaling.current * sys.scaling.length / (Ly)
         j.append(tj)
 

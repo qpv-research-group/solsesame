@@ -1,4 +1,4 @@
-import sesame
+import solsesame
 import numpy as np
 import scipy.io as sio
 
@@ -24,7 +24,7 @@ def system(N=0,s=1e-18*1e4):
 
 
     # Create a system
-    sys = sesame.Builder(x, y)
+    sys = solsesame.Builder(x, y)
 
     def region(pos):
         x, y = pos
@@ -80,7 +80,7 @@ def runTest3():
 
     sys = system(rhoGBlist[0])
 
-    solution = sesame.solve(sys, compute='Poisson', verbose=False)
+    solution = solsesame.solve(sys, compute='Poisson', verbose=False)
 
 
 
@@ -88,7 +88,7 @@ def runTest3():
     rhoGBlist = [1e6*1e-4, 1e18*1e-4]
     for idx, rhoGB in enumerate(rhoGBlist):
         sys = system(rhoGB,s0)
-        solution = sesame.solve(sys, compute='Poisson', guess=solution, maxiter=5000, verbose=False)
+        solution = solsesame.solve(sys, compute='Poisson', guess=solution, maxiter=5000, verbose=False)
     veq = np.copy(solution['v'])
 
     efn = np.zeros((sys.nx * sys.ny,))
@@ -109,8 +109,8 @@ def runTest3():
     sys = system(rhoGBlist[1],slist[0])
 
     sys.generation(f)
-    solution = sesame.solve(sys, guess=solution, maxiter=5000, verbose=False)
-    az = sesame.Analyzer(sys, solution)
+    solution = solsesame.solve(sys, guess=solution, maxiter=5000, verbose=False)
+    az = solsesame.Analyzer(sys, solution)
     tj = -az.full_current()
 
 
@@ -136,9 +136,9 @@ def runTest3():
         # Apply the voltage on the right contact
         result['v'][s] = veq[s] + q * vapp
         # Call the Drift Diffusion Poisson solver
-        result = sesame.solve(sys, guess=result, maxiter=1000, verbose=False)
+        result = solsesame.solve(sys, guess=result, maxiter=1000, verbose=False)
         # Compute current
-        az = sesame.Analyzer(sys, result)
+        az = solsesame.Analyzer(sys, result)
         tj = az.full_current() * sys.scaling.current * sys.scaling.length / (3e-6*1e2)
         j.append(tj)
     #    print(j)

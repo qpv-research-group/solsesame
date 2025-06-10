@@ -71,7 +71,7 @@ author = 'Benoit H. Gaury, Paul M. Haney'
 #
 # The short X.Y version.
 version_info = {}
-with open('../sesame/_version.py', 'r') as f:
+with open('../solsesame/_version.py', 'r') as f:
     exec(f.read(), {}, version_info)
 version = version_info['__version__']
 # The full version, including alpha/beta/rc tags.
@@ -322,7 +322,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'sesame', 'Sesame Documentation',
+    (master_doc, 'solsesame', 'Sesame Documentation',
      [author], 1)
 ]
 
