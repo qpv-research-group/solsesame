@@ -64,7 +64,7 @@ derivative operator.  :math:`\bar{N}_{A,(D)}` are the dimensionless ionized acce
 
 with :math:`D=k_BT\mu/q` a diffusion coefficient corresponding to our choice of
 scaling for the mobility :math:`\mu=1~\mathrm{cm^2/(V\cdot s)}`. See the 
-:func:`~sesame.builder.Scaling` class for the implementation of these scalings.
+:func:`~solsesame.builder.Scaling` class for the implementation of these scalings.
 
 
 We suppose that the bulk recombination is through three mechanisms:

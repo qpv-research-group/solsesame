@@ -20,8 +20,8 @@
 import sys, os
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('../'))
-sys.path.insert(0, os.path.abspath('../sesame'))
-sys.path.insert(0, os.path.abspath('../sesame/'))
+sys.path.insert(0, os.path.abspath('../solsesame'))
+sys.path.insert(0, os.path.abspath('../solsesame/'))
 
 # -- General configuration ------------------------------------------------
 

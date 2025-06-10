@@ -76,12 +76,12 @@ class Analyzer():
         -----
         This method can be used with an instance of the Analyzer():
 
-        >>> az = sesame.Analyzer(sys, res)
+        >>> az = solsesame.Analyzer(sys, res)
         >>> X, sites = az.line(sys, p1, p2)
 
         or without it:
 
-        >>> X, sites = sesame.Analyzer.line(sys, p1, p2)
+        >>> X, sites = solsesame.Analyzer.line(sys, p1, p2)
         """
 
         p1 = (p1[0], p1[1], 0)
