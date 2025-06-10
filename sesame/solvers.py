@@ -196,39 +196,10 @@ class Solver():
 
 
     def _damping(self, dx):
-        # This damping procedure is inspired from Solid-State Electronics, vol. 19,
-        # pp. 991-992 (1976).
+
 
         b = np.abs(dx) > 1
-        # print('max b value:', np.max(np.abs(dx)))
-
-        # if np.sum(b) > 1:
-        #     print(np.min(np.log(1+np.abs(dx[b])*1.72)*np.sign(dx[b])))
-        #     print(np.max(np.log(1+np.abs(dx[b])*1.72)*np.sign(dx[b])))
-        #
-        # else:
-        #     print("No replacement")
-
-        # import matplotlib.pyplot as plt
-        # plt.figure()
-        # plt.semilogy(np.abs(dx[0::3]), '-k', label='efn')
-        # plt.plot(np.abs(dx[1::3]), '-r', label='efp')
-        # plt.plot(np.abs(dx[2::3]), '-b', label='v')
-        #
-        # print('max before damping:', np.max(np.abs(dx[0::3])), np.max(np.abs(dx[1::3])), np.max(np.abs(dx[2::3])))
-
         dx[b] = np.log(1+np.abs(dx[b])*1.72)*np.sign(dx[b])
-
-        # print('max after damping:', np.max(np.abs(dx[0::3])), np.max(np.abs(dx[1::3])), np.max(np.abs(dx[2::3])))
-        #
-        #
-        # plt.plot(np.abs(dx[0::3]), '-.k')
-        # plt.plot(np.abs(dx[1::3]), '-.r')
-        # plt.plot(np.abs(dx[2::3]), '-.b')
-        # plt.legend()
-        # plt.title('_damping')
-        # plt.show()
-
 
     def _sparse_solver(self, J, f):
         spsolve = lg.spsolve
@@ -254,9 +225,6 @@ class Solver():
             J = coo_matrix((data, (rows, columns)), dtype=np.float64)
         else:
             J = csr_matrix((data, (rows, columns)), dtype=np.float64)
-
-        # np.save('f_converging.npy', f)
-        # np.save('J_converging.npy', J)
 
         return f, J
 
@@ -305,65 +273,15 @@ class Solver():
                         dx.transpose()
                         # compute error
                         error = max(np.abs(dx))
-
                         if np.isnan(error) or error > 1e30:
                             raise NewtonError
                             break
                         if error < htol:
                             converged = True
                         else:
-
-
                             # damping and new value of x
-
-                            # print(f"Error: {error} at step {cc}")
-
-
-                            error_increase = error - previous_error
-
-                            if error_increase > 1000 * previous_error:
-                                print("Error increase too large")
-                                # x = previous_x - previous_dx
-                                # previous_dx = - previous_dx
-                                # previous_x = x
-                                #
-                            # import matplotlib.pyplot as plt
-                            #
-                            # plt.figure()
-                            # plt.plot(x[0::3], '-k', label='efn')
-                            # plt.plot(x[1::3], '-r', label='efp')
-                            # plt.plot(x[2::3], '-b', label='v')
-                            #
-                            #
-                            # plt.legend()
-                            # plt.title('_newton, Step {0}, error = {1}'.format(cc, error))
-                            # plt.show()
-
-
-                            # save results each loop:
-
-                            # filename = f"nonconverging_differentmesh/results_V{voltage}_gamma{gamma}_step{cc}.npy"
-
-                            # save: x, dx before damping, dx after damping
-
-                            dx_before = dx
                             self._damping(dx)
-
-                            # plt.figure()
-                            # plt.plot(dx[0::3], '-k', label='efn')
-                            # plt.plot(dx[1::3], '-r', label='efp')
-                            # plt.plot(dx[2::3], '-b', label='v')
-                            # plt.legend()
-                            # plt.title('_newton')
-                            # plt.show()
-                            # make array to save:
-                            # results = {'x': x, 'dx_before': dx_before, 'dx_after': dx}
-                            # np.save(filename, results)
-
                             x += dx
-
-
-
                         # print status of solution procedure
                         if verbose:
                             logging.info('step {0}, error = {1}'.format(cc, error))
@@ -490,19 +408,6 @@ class Solver():
                                 voltage=voltages[idx])
 
             if result is not None:
-                # 1. Save efn, efp, v
-
-                # if file_name is not None:
-                #
-                #     name = file_name + "_{0}".format(idx)
-                #     # add some system settings to the saved results
-                #
-                #     if fmt == 'mat':
-                #         save_sim(system, result, name, fmt='mat')
-                #     else:
-                #         filename = "%s.gzip" % name
-                #         save_sim(system, result, filename)
-                #     # 2. Compute the steady state current
 
                 result_array['efn'][idx, :] = result['efn']
                 result_array['efp'][idx, :] = result['efp']

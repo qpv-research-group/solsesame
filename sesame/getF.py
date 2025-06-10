@@ -153,14 +153,4 @@ def getF(sys, v, efn, efp, veq):
     vec[3 * sites + 1] = bp
     vec[3 * sites + 2] = bv
 
-    # import matplotlib.pyplot as plt
-    #
-    # plt.figure()
-    # plt.plot(bn, '-r', label='bn')
-    # plt.plot(bp, '-b', label='bp')
-    # plt.plot(bv, '-g', label='bv')
-    # plt.legend()
-    # plt.title('getF')
-    # plt.show()
-
     return vec

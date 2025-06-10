@@ -86,21 +86,6 @@ def get_bulk_rr_derivs(sys, n, p):
          / (sys.tau_h * (n + sys.n1) + sys.tau_e * (p + sys.p1)) ** 2 \
          + sys.Cn * n * (_np - ni2) - sys.Cp * p * (_np - ni2)
 
-
-    # import matplotlib.pyplot as plt
-    #
-    # fig, (ax1, ax2) = plt.subplots(2, 1)
-    # # ax1.plot(
-    # #     (_np * (sys.tau_h * (n + sys.n1) + sys.tau_e * (p + sys.p1)) - (_np - ni2) * n * sys.tau_h) \
-    # #     / (sys.tau_h * (n + sys.n1) + sys.tau_e * (p + sys.p1)) ** 2, '-k')
-    # # ax1.plot(sys.B * _np, '--r')
-    #
-    # ax2.plot(defn, '-k', label='defn')
-    # ax2.plot(defp, '--r', label='defp')
-    # plt.legend()
-    # plt.title('get_bulk_rr_derivatives')
-    # plt.show()
-
     return defn, defp, dv
 
 
