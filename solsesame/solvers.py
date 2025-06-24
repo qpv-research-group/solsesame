@@ -162,7 +162,7 @@ class Solver():
             # Compute the potential (Newton returns an array)
             self.equilibrium = self._newton(system, guess, tol=tol,\
                               periodic_bcs=periodic_bcs,\
-                              maxiter=maxiter, verbose=verbose, htp=htp, voltage=voltage)
+                              maxiter=maxiter, verbose=verbose, htp=htp)
 
             if self.equilibrium is None:
                 return None
@@ -186,8 +186,7 @@ class Solver():
 
             # Compute solution (Newton returns an array)
             x = self._newton(system, x, tol=tol, periodic_bcs=periodic_bcs,\
-                             maxiter=maxiter, verbose=verbose, htp=htp,
-                             voltage=voltage)
+                             maxiter=maxiter, verbose=verbose, htp=htp)
 
             if x is not None:
                 return {'efn': x[0::3], 'efp': x[1::3], 'v': x[2::3]}
@@ -229,14 +228,9 @@ class Solver():
         return f, J
 
 
-    def _newton(self, system, x, tol=1e-6, periodic_bcs=True, maxiter=300, verbose=True, htp=1,
-                voltage=0):
+    def _newton(self, system, x, tol=1e-6, periodic_bcs=True, maxiter=300, verbose=True, htp=1):
 
         htpy = np.linspace(1./htp, 1, htp)
-
-        previous_error = 1e30
-        previous_dx = 0
-        previous_x = x
 
         for gdx, gamma in enumerate(htpy):
             if verbose:
@@ -281,7 +275,7 @@ class Solver():
                         else:
                             # damping and new value of x
                             self._damping(dx)
-                            x += dx
+                            x = x + dx
                         # print status of solution procedure
                         if verbose:
                             logging.info('step {0}, error = {1}'.format(cc, error))
@@ -301,7 +295,7 @@ class Solver():
             return None
 
     def IVcurve(self, system, voltages, guess=None, tol=1e-6,
-                periodic_bcs=True, maxiter=300, verbose=True, htp=1, fmt='npz'):
+                periodic_bcs=True, maxiter=300, verbose=True, htp=1):
         """
         Solve the Drift Diffusion Poisson equations for the voltages provided. The
         results are stored in files with ``.npz`` format by default (See below for

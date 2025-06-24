@@ -20,7 +20,7 @@ defect = namedtuple('defect', ['sites', 'location', \
                                'transition', 'perp_dl'])
 
 class Scaling():
-    """
+    r"""
     An object defining the scalings of the drift-diffusion-Poisson equation. The
     temperature of the system and the reference unit for lengths are specified
     when an instance is created. The default unit for length is cm, and the
@@ -86,7 +86,7 @@ class Scaling():
 
 
 class Builder():
-    """
+    r"""
     A system discretized on a mesh. 
 
     This type discretizes a system on a mesh provided by the user, and takes
@@ -189,7 +189,7 @@ class Builder():
         self.defects_list = []
 
     def add_material(self, mat, location=lambda pos: True):
-        """
+        r"""
         Add a material to the system.
 
         Parameters
@@ -266,7 +266,7 @@ class Builder():
 
     def add_defects(self, location, N, sigma_e, sigma_h=None, E=None,
                     transition=(1,-1)):
-        """
+        r"""
         Add additional charges (for a grain boundary for instance) to the total
         charge of the system. These charges are distributed on a line.
 
@@ -329,7 +329,7 @@ class Builder():
         self.rho[s] = self.rho[s] + density / self.scaling.density
 
     def add_donor(self, density, location=lambda pos: True):
-        """
+        r"""
         Add donor dopants to the system.
 
         Parameters
@@ -345,7 +345,7 @@ class Builder():
         self.doping_profile(density, location)
 
     def add_acceptor(self, density, location=lambda pos: True):
-        """
+        r"""
         Add acceptor dopants to the system.
 
         Parameters
@@ -361,7 +361,7 @@ class Builder():
         self.doping_profile(-density, location)
 
     def generation(self, f, args=[]):
-        """
+        r"""
         Distribution of generated carriers.
 
         Parameters
@@ -403,7 +403,7 @@ class Builder():
 
 
     def contact_S(self, Scn_left, Scp_left, Scn_right, Scp_right):
-        """
+        r"""
         Create the lists of recombination velocities that define the charge
         collection at the contacts out of equilibrium.
 
@@ -426,7 +426,7 @@ class Builder():
                     Scp_right / self.scaling.velocity]
 
     def contact_type(self, left_contact, right_contact, left_wf=None, right_wf=None):
-        """
+        r"""
         Define the boundary conditions for the contacts at thermal equilibrium.
         'Ohmic' or 'Schottky' impose a value of the electrostatic potential,
         'Neutral' imposes a zero potential derivative.  
