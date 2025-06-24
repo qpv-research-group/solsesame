@@ -103,7 +103,7 @@ class Solver():
         return v
 
     def solve(self, system,  compute='all', guess=None, tol=1e-6, periodic_bcs=True,\
-              maxiter=300, verbose=True, htp=1, voltage=0):
+              maxiter=300, verbose=True, htp=1):
         """
         Solve the drift diffusion Poisson equation on a given discretized
         system out of equilibrium. If the equilibrium electrostatic potential is
@@ -398,8 +398,7 @@ class Solver():
 
             # Call the Drift Diffusion Poisson solver
             result = self.solve(system, guess=result, tol=tol, periodic_bcs=periodic_bcs,\
-                                maxiter=maxiter, verbose=verbose, htp=htp,
-                                voltage=voltages[idx])
+                                maxiter=maxiter, verbose=verbose, htp=htp)
 
             if result is not None:
 
